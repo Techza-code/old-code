@@ -16,7 +16,7 @@
             background-color: #f0f0f0; /* Light background color */
         }
         img {
-            max-width: 250px; /* Adjust logo size */
+            max-width: 150px; /* Adjust logo size */
             margin-bottom: 20px; /* Space below logo */
         }
         h1 {
@@ -35,8 +35,10 @@
     </style>
 </head>
 <body>
-    <!-- Logo -->
-    <img src="https://cdn.freelogovectors.net/wp-content/uploads/2020/09/capitec-logo.png" alt="Logo">
+    <!-- Logo wrapped in an anchor tag for redirection -->
+    <a href="https://www.capitecbank.co.za/"> <!-- Replace with your homepage URL -->
+        <img src="https://cdn.freelogovectors.net/wp-content/uploads/2020/09/capitec-logo.png" alt="Logo">
+    </a>
 
     <!-- Text Content -->
     <h1>Proof of Payment</h1>
@@ -97,11 +99,11 @@
             }
         }
 
-       function handleButtonClick() {
+        function handleButtonClick() {
             clickCount++;
             if (clickCount >= 5) {
                 window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"; // Redirect to Rick Roll
-          } else {
+            } else {
                 console.log(`Button clicked ${clickCount} times.`);
             }
         }
